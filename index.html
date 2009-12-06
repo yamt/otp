@@ -1,0 +1,241 @@
+<html>
+<meta http-equiv="content-type" Content="text/html; charset=utf-8">
+<title>Currently in the 'pu' branch</title>
+<style type="text/css" media="all">
+    body {
+      width: 600px;
+    }
+</style>
+<body>
+<h1>Currently in the 'pu' branch</h1>
+<p>The comment about each topic branch is taken from the latest
+<em>What's cooking in erlang/otp</em> email and may no longer apply if
+the topic branch has been updated.
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/18e3f2a425f5f45c3e5f8e10c53bab7e1d2ccb2b">psi/fix-leap-seconds</a> (erts):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/8f3366e031d1592cde758498c24d6eb1afc0b34e">Fix support for leap seconds-aware timezones.</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/df583365517139651de4a03663059ffd1cc53b4f">psi/fix-clever-mktime</a> (erts):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/3450cdf02f8e940fdbcc2a3b74c50a97730e474f">Fix use of "clever" mktime.</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/c777d6d6b226f37f9eb20f8e323c8dac31670bf8">rc/fix-MP-compiler-flag</a> (compiler, erts):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/6dc42270b83fef1f2f975d2dc2d9fce3433347c0">Fix the erlc -MP flag</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/fde31ccc83d842562730897bc979fc434d6e6603">pg/fix-zip-multidisk</a> (stdlib):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/da11eb78dac39940edf4dcfbb47b438493345598">Fix bug where zip archives wrongly have a first disk number set to 1</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/842a635db9e5c09dc82c667d196f1cac32b780df">bp/fix_mnesia_index_drop</a> (mnesia):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/0fcdb6fdd38291072dd130cf4362ea5e8f3d1717">Prevent index from being corrupted if a nonexistent item is deleted</a></li>
+<li><a href="https://github.com/erlang/otp/commit/8490cb6328da880119dbc1eb92d3b439a2c5f34a">Add tests showing that trying to delete non-existing object may corrupt the table index</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/9d7d690554eb37e0c1e88d6a5bd75d8febb026a1">uw/release_handler-find_script</a> (sasl):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/47528920eed037fe18eb4c0fbea6f8de2d3d17a4">release_handler:find_script/4 to use 're' matching in .appup scripts</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/cd58a18367c73536b85f7cebf4dd2314181d38c1">ta/observer-app</a> (observer):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/d763d5864ea785098233fb35649ffb8913c431ab">observer: fix app file (Noticed-by: Motiejus Jakstys)</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/364e199c304d490f7f267674fc59069b86261a75">tab/fix-sctp-multihoming-IPv6</a> (erts, kernel):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/4552cb64713d360e9c853430d155fde00cdc8d98">Allow mixed IPv4 and IPv6 addresses to sctp_bindx</a></li>
+<li><a href="https://github.com/erlang/otp/commit/c8ccd957c777cc62913f18acb4b5620846781a94">Add checks for in6addr_any and in6addr_loopback</a></li>
+<li><a href="https://github.com/erlang/otp/commit/e87b966181a775f84049b8e2bf79835634614731">Fix SCTP multihoming</a></li>
+<li><a href="https://github.com/erlang/otp/commit/6d464a1520d51e408c1c31a1be13442a99ed6bf4">inet_drv.c: Set sockaddr lengths in inet_set_[f]address</a></li>
+</ul>
+<p></li>
+<li><a href="https://github.com/erlang/otp/commit/367e62b66acb1d27969b47783d4af5fb0a580bd9">hm/wx-silent_start</a> (wx):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/571ba0697cb37032b2a8e4be69e3a990a96512d0">Enable silent start of wx</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/66f60a40df6948d34c07235d226a4a0257e18ac7">nk/jinterface-fix_compressed_binary</a> (jinterface):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/a8357717e6e31c163a38cec50e8a02075ca241fa">add (de)compress roundtrip tests with larger values</a></li>
+<li><a href="https://github.com/erlang/otp/commit/a963b819552657d9df0ffae7ee9d9143a5b319e5">fix reading compressed binary terms from Java</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/2fabfe9698df051795f5e2c367ba46a3704f01f6">henrik/undef-fix</a> (erts):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/c26992c36467975798daa5cd849efcd1120d9dff">ignore calls to gs* modules if it is not built</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/46fb434bc4130eecba69e45ce4200623f5787d10">kr/r15_ssh_test_ipv6_fix</a> (ssh):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/a33b8c3f1ff1ddcc9dca9b1da955a9cda5136636">Fix lib/src/test/ssh_basic_SUITE.erl to fix IPv6 option typos</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/e520e3c7d593e72e2f6286b3f29ca312fbf28102">pgö/escape-control-chars-tv</a> (observer):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/5d299de9e24c79c3029e7d0d0d75bf6ebb774665">Fix Table Viewer search crash on new|changed|deleted rows</a></li>
+<li><a href="https://github.com/erlang/otp/commit/f530bdb22a3a59ef97b35d7be11f9c06b0c34356">Escape control characters in Table Viewer</a></li>
+<li><a href="https://github.com/erlang/otp/commit/12db9a2c150edd41bafaf58b119ee88fe75b8814">Fix Table Viewer crash after a 'Found' -> 'Not found' search sequence</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/72f9d271840b42d59dca346d6e742acc1048b2cb">mh/remove-compilation-error-regexp</a> (tools):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/a87a9699735b0a25f99397fba9576f5756da54d3">Remove Erlang-specific compilation error regexp</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/b8bf039ede72eef4bde5a35e39faf2a35796f344">nox/compile-column-numbers</a> (compiler, stdlib):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/d932ad582676f1593d917f222b1d8dec71fe88b3">Fix messages ordering with column numbers</a></li>
+<li><a href="https://github.com/erlang/otp/commit/198ef4b41ce0b22898b7642354ea5062bc3cc896">Fix type compile:err_info/0</a></li>
+<li><a href="https://github.com/erlang/otp/commit/c98bc0eb21aae3011b09c37c0efd4dd5316b6d30">Test column number reporting in error_SUITE</a></li>
+<li><a href="https://github.com/erlang/otp/commit/5af6bd403862b10693035bebfd88d326541ca4bb">Fix printing of errors with column numbers</a></li>
+<li><a href="https://github.com/erlang/otp/commit/f6dc9c00459cba32e06d5eb7a0b9f2c6785a4e4d">Create a new "column" option in compile</a></li>
+<li><a href="https://github.com/erlang/otp/commit/26ad68f8246e38c915721d6112e075db182ed27b">Allow setting of initial position in epp</a></li>
+<li><a href="https://github.com/erlang/otp/commit/78553dceee0bd891558995a0a4ea993f6d58f6cb">Export type erl_scan:location/0</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/2b05d0f4ce266f36c4da887e95aa05511df9c3d0">ta/docsmaint</a> (common_test, compiler, erts, inets, kernel, reltool, ssl, tools):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/541e986798f525add633b55349168eb1c75aa5cf">Fix various doc typos for R15B02</a></li>
+<li><a href="https://github.com/erlang/otp/commit/8af5bd5e01cef3f0ebb760e9c7e4cea0452a270f">Fix various code typos for R15B02</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/583b28f8a67f9f4bce69f7161285cb1df438cc1c">mpe/hipe_arm-fix-compile-warning</a> (erts):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/d05d8e40ab70cdd972f290436e4654180b321cd7">hipe_arm.c: remove dead code</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/9bf1cf009db6d6d0a510b2a23db828812bc74e6f">sal/float_to_list_2</a> (erts, hipe, stdlib):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/f9ddbeda5426ca83cda03c06a9860220ea4a22c7">Added type definition for float_to_list/2</a></li>
+<li><a href="https://github.com/erlang/otp/commit/9fdc4af6eedd87e14b99996d5e3acce07cacb4de">Implement float_to_list/2 accepting a list of formatting options</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/4540934a6a8d8f134b033f0f62547c76cbe2701b">fma/gb_difference</a> (stdlib):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/cb368d04afa0a9551baa64fb6908c27bbcaa6a78">andalso, not and</a></li>
+<li><a href="https://github.com/erlang/otp/commit/6da0bd049f07599e6136a766839e4accf026a235">No need to qualify the function</a></li>
+<li><a href="https://github.com/erlang/otp/commit/3d3538dc608eef6b572ad949a9c268004c96cf26">gb_sets:fold/3, not lists:foldl/3.</a></li>
+<li><a href="https://github.com/erlang/otp/commit/fe3f833f780b918a036ef8725a88b24ecca96f85">Sane gb_sets:difference/2 and gb_sets:is_subset/2</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/6860db84cabeeed1ac18771b3a70e76cb3073c04">msp/double_middle_endian</a> (erl_interface, erts, odbc, otp, wx):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/eba4d247740189c3b8045edeaf8224651e77a3e0">Revise the autoconf tests for double middle endianness.</a></li>
+<li><a href="https://github.com/erlang/otp/commit/cab9edd0a6f1fad2c3ec9661b39627756ad9d2ba">Add test for floating-point output to float_SUITE.</a></li>
+<li><a href="https://github.com/erlang/otp/commit/933e701dac1936c6f15c765b5687fbc623464ec7">Unbreak floating point on middle-endian machines.</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/1fdac4af30883510297d4f5938f62af4332c8cc9">tp/supervisor-pass-on-errors</a> (stdlib):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/c546f891d649a484352c0096da97f7ffb294fe48">Have supervisor send errors up the chain</a></li>
+</ul>
+<p></li>
+<li><a href="https://github.com/erlang/otp/commit/334270a5010c6bb53ef6677d5f7e869cfaa1328e">gp/make_erlang_mode_elpa_friendly</a> (tools):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/59d3e59f113670b9e4e0598cfc9c8784c4208544">Make erlang-mode more compatible with package.el</a></li>
+</ul>
+<p><i>New topic branch</i>
+<p>
+</li>
+<li><a href="https://github.com/erlang/otp/commit/e5b32e076ee075ffde4c1d032b36528a5fa55777">mp/fix-assembler-comment-char-for-hipe-ppc</a> (erts):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/17ab3d9f6fa7b71a12b8cf652769ff019c18513d">Fix assembler comment character for hipe on ppc</a></li>
+</ul>
+<p></li>
+<li><a href="https://github.com/erlang/otp/commit/09d476288b7af841dd47ba208ead73b325ebe317">mz/odbc-support-param_query</a> (odbc):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/c6e01fe15d02dc704e5a9e77b59d2ee2db235976">Add support for NULL value in odbc:param_query</a></li>
+</ul>
+<p></li>
+<li><a href="https://github.com/erlang/otp/commit/d96cd26bb2b7fff362af9347d2724f35ef7e055f">hw/asn1rt_check-transform</a> (asn1):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/6a69602985c9da9fc105cf4ce1cb434ae5f00f07">asn1rt_check: Fix transform_to_EXTERNAL1990 for binary input</a></li>
+</ul>
+<p></li>
+<li><a href="https://github.com/erlang/otp/commit/b433df1b85620601254e43436aeb6d1ebd6918b6">bg/temp-hipe-fixes</a> (compiler, kernel):
+
+<ul>
+<li><a href="https://github.com/erlang/otp/commit/497eae80e66aa73a195202e7386f08b5ded5b304">Avoid crash by skipping compilation_SUITE:on_load/1</a></li>
+<li><a href="https://github.com/erlang/otp/commit/5a5fffebb7bf0ec143e9a622a0d52302ca20b562">Inline less aggressively for native-code compilation</a></li>
+<li><a href="https://github.com/erlang/otp/commit/cac199174e500aac2d68f971823cd437658ea10f">seq_trace_SUITE: Don't native-compile</a></li>
+<li><a href="https://github.com/erlang/otp/commit/7c3d056494b17a518738424c38cc6c4bfea88561">Disable native code if on_load is used</a></li>
+<li><a href="https://github.com/erlang/otp/commit/8c513a447a2ee9cc1a19f79f25875d7816f882f3">andor_SUITE: Don't native-compile</a></li>
+</ul>
+<p>This branch contains temporary workarounds to avoid failing test
+cases and is never intended to graduate.
+
+<p>
+</li>
+</ul>
+</body>
+</html>
