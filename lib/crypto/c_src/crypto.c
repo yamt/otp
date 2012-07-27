@@ -44,6 +44,7 @@
 #include <openssl/md5.h>
 #include <openssl/md4.h>
 #include <openssl/sha.h>
+#include <openssl/ripemd.h>
 #include <openssl/bn.h>
 #include <openssl/objects.h>
 #include <openssl/rc4.h>
@@ -62,6 +63,9 @@
 #endif
 #if OPENSSL_VERSION_NUMBER >= 0x00908000L && !defined(OPENSSL_NO_SHA512) && defined(NID_sha512)
 # define HAVE_SHA512
+#endif
+#if OPENSSL_VERSION_NUMBER >= 0x00908000L && !defined(OPENSSL_NO_RIPEMD) && defined(NID_ripemd160)
+# define HAVE_RIPEMD160
 #endif
 
 #ifdef VALGRIND
@@ -143,6 +147,10 @@ static ERL_NIF_TERM sha512_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv
 static ERL_NIF_TERM sha512_init_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
 static ERL_NIF_TERM sha512_update_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
 static ERL_NIF_TERM sha512_final_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
+static ERL_NIF_TERM ripemd160_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
+static ERL_NIF_TERM ripemd160_init_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
+static ERL_NIF_TERM ripemd160_update_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
+static ERL_NIF_TERM ripemd160_final_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
 static ERL_NIF_TERM md4(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
 static ERL_NIF_TERM md4_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
 static ERL_NIF_TERM md4_update(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[]);
@@ -228,6 +236,10 @@ static ErlNifFunc nif_funcs[] = {
     {"sha512_init_nif", 0, sha512_init_nif},
     {"sha512_update_nif", 2, sha512_update_nif},
     {"sha512_final_nif", 1, sha512_final_nif},
+    {"ripemd160_nif", 1, ripemd160_nif},
+    {"ripemd160_init_nif", 0, ripemd160_init_nif},
+    {"ripemd160_update_nif", 2, ripemd160_update_nif},
+    {"ripemd160_final_nif", 1, ripemd160_final_nif},
     {"md4", 1, md4},
     {"md4_init", 0, md4_init},
     {"md4_update", 2, md4_update},
@@ -290,6 +302,7 @@ ERL_NIF_INIT(crypto,nif_funcs,load,reload,upgrade,unload)
 #define SHA256_LEN	(256/8)
 #define SHA384_LEN	(384/8)
 #define SHA512_LEN	(512/8)
+#define RIPEMD160_LEN	(160/8)
 #define HMAC_INT_LEN    64
 
 #define HMAC_IPAD       0x36
@@ -679,6 +692,74 @@ static ERL_NIF_TERM sha512_final_nif(ErlNifEnv* env, int argc, const ERL_NIF_TER
 #endif
 }
 
+static ERL_NIF_TERM ripemd160_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+#ifdef HAVE_RIPEMD160
+    ErlNifBinary binary;
+    ERL_NIF_TERM result;
+
+    if (!enif_inspect_iolist_as_binary(env, argv[0], &binary)) {
+        return enif_make_badarg(env);
+    }
+
+    RIPEMD160((unsigned char *)binary.data, binary.size, enif_make_new_binary(env, RIPEMD160_LEN, &result));
+    return result;
+#else
+    return atom_notsup;
+#endif
+}
+
+static ERL_NIF_TERM ripemd160_init_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+#ifdef HAVE_RIPEMD160
+    ERL_NIF_TERM result;
+    RIPEMD160_Init((RIPEMD160_CTX *)enif_make_new_binary(env, sizeof(RIPEMD160_CTX), &result));
+    return result;
+#else
+    return atom_notsup;
+#endif
+}
+
+static ERL_NIF_TERM ripemd160_update_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+#ifdef HAVE_RIPEMD160
+    RIPEMD160_CTX* new_context;
+    ErlNifBinary context_binary, data_binary;
+    ERL_NIF_TERM result;
+
+    if (!enif_inspect_binary(env, argv[0], &context_binary)
+            || context_binary.size != sizeof(RIPEMD160_CTX)
+            || !enif_inspect_iolist_as_binary(env, argv[1], &data_binary)) {
+        return enif_make_badarg(env);
+    }
+
+    new_context = (RIPEMD160_CTX *)enif_make_new_binary(env, sizeof(RIPEMD160_CTX), &result);
+    memcpy(new_context, context_binary.data, sizeof(RIPEMD160_CTX));
+    RIPEMD160_Update(new_context, data_binary.data, data_binary.size);
+    return result;
+#else
+    return atom_notsup;
+#endif
+}
+
+static ERL_NIF_TERM ripemd160_final_nif(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+#ifdef HAVE_RIPEMD160
+    ErlNifBinary context_binary;
+    RIPEMD160_CTX context_clone;
+    ERL_NIF_TERM result;
+    if (!enif_inspect_binary(env, argv[0], &context_binary)
+            || context_binary.size != sizeof(RIPEMD160_CTX)) {
+        return enif_make_badarg(env);
+    }
+
+    memcpy(&context_clone, context_binary.data, sizeof(RIPEMD160_CTX));
+    RIPEMD160_Final(enif_make_new_binary(env, RIPEMD160_LEN, &result), &context_clone);
+    return result;
+#else
+    return atom_notsup;
+#endif
+}
 
 static ERL_NIF_TERM md4(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {/* (Data) */    

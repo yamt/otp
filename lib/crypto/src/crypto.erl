@@ -27,6 +27,7 @@
 -export([sha/1, sha_init/0, sha_update/2, sha_final/1]).
 -export([sha256/1, sha256_init/0, sha256_update/2, sha256_final/1]).
 -export([sha512/1, sha512_init/0, sha512_update/2, sha512_final/1]).
+-export([ripemd160/1, ripemd160_init/0, ripemd160_update/2, ripemd160_final/1]).
 -export([md5_mac/2, md5_mac_96/2, sha_mac/2, sha_mac/3, sha_mac_96/2]).
 -export([hmac_init/2, hmac_update/2, hmac_final/1, hmac_final_n/2]).
 -export([des_cbc_encrypt/3, des_cbc_decrypt/3, des_cbc_ivec/1]).
@@ -66,6 +67,7 @@
 		    sha, sha_init, sha_update, sha_final,
  		    sha256, sha256_init, sha256_update, sha256_final,
  		    sha512, sha512_init, sha512_update, sha512_final,
+		    ripemd160, ripemd160_init, ripemd160_update, ripemd160_final,
 		    md5_mac,  md5_mac_96,
 		    sha_mac,  sha_mac_96,
                     sha_mac_init, sha_mac_update, sha_mac_final,
@@ -286,6 +288,40 @@ sha512_nif(_Data) -> ?nif_stub.
 sha512_init_nif() -> ?nif_stub.
 sha512_update_nif(_Context, _Data) -> ?nif_stub.
 sha512_final_nif(_Context) -> ?nif_stub.
+
+%%
+%% RIPEMD160
+%%
+-spec ripemd160(iodata()) -> binary().
+-spec ripemd160_init() -> binary().
+-spec ripemd160_update(binary(), iodata()) -> binary().
+-spec ripemd160_final(binary()) -> binary().
+
+ripemd160(Data) ->
+    case ripemd160_nif(Data) of
+        notsup -> erlang:error(notsup);
+        Bin -> Bin
+    end.
+ripemd160_init() ->
+    case ripemd160_init_nif() of
+        notsup -> erlang:error(notsup);
+        Bin -> Bin
+    end.
+ripemd160_update(Context, Data) ->
+    case ripemd160_update_nif(Context, Data) of
+        notsup -> erlang:error(notsup);
+        Bin -> Bin
+    end.
+ripemd160_final(Context) ->
+    case ripemd160_final_nif(Context) of
+        notsup -> erlang:error(notsup);
+        Bin -> Bin
+    end.
+
+ripemd160_nif(_Data) -> ?nif_stub.
+ripemd160_init_nif() -> ?nif_stub.
+ripemd160_update_nif(_Context, _Data) -> ?nif_stub.
+ripemd160_final_nif(_Context) -> ?nif_stub.
 
 %%
 %%  MESSAGE AUTHENTICATION CODES
