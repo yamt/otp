@@ -954,9 +954,9 @@ verify_vacmViewTreeFamilyTable_col(?vacmViewTreeFamilyMask, Mask) ->
 	null -> [];
 	[]   -> [];
 	_ ->
-	    case (catch snmp_conf:check_oid(Mask)) of
+	    case (catch check_mask(Mask)) of
 		ok ->
-		    Mask;
+		    mask2oid(Mask);
 	        _ ->
 		    wrongValue(?vacmViewTreeFamilyMask)
 	    end
@@ -972,7 +972,54 @@ verify_vacmViewTreeFamilyTable_col(?vacmViewTreeFamilyType, Type) ->
     end;
 verify_vacmViewTreeFamilyTable_col(_, Val) ->
     Val.
-	    
+
+
+check_mask([]) ->
+    ok;
+check_mask([Head | Tail]) when is_integer(Head) ->
+% we can cause exception here because the caller catches
+    if
+        Head > -1 andalso Head < 256 ->
+            check_mask(Tail)
+    end.
+
+% internally (for easier computations), the mask is stored
+% as OID and not as bit-field. Therefore, we have to convert
+% the bitstring to a list of integers before storing it.
+mask2oid(Mask) ->
+    Func = fun(Byte) ->
+            % what's a nice syntax for extracting bits
+            % from a byte???
+            <<A:1, B:1, C:1, D:1, E:1, F:1, G:1, H:1>> = <<Byte>>,
+            [A, B, C, D, E, F, G, H]
+    end,
+    lists:flatten(lists:map(Func, Mask)).
+
+oid2mask(Oid) ->
+    % convert all suboids to either 1 or 0 for sure
+    Func = fun
+        (0) -> 0;
+        (_) -> 1
+    end,
+    oid2mask(lists:map(Func, Oid), []).
+
+oid2mask([], Mask) ->
+    % end-of-list, return bitstring
+    lists:reverse(Mask);
+oid2mask(Oid, Mask) ->
+    % check whether we've got at least 8 sub-identifiers. if not,
+    % extend with 1's until there are enough to fill a byte
+    NOid = case length(Oid) of
+        Small when Small < 8 ->
+            Oid ++ lists:duplicate(8-Small, 1);
+        _ ->
+            Oid
+    end,
+    % extract sufficient suboids for 8 bits
+    [A, B, C, D, E, F, G, H | Tail] = NOid,
+    <<Byte:8>> = <<A:1, B:1, C:1, D:1, E:1, F:1, G:1, H:1>>,
+    oid2mask(Tail, [Byte | Mask]).
+
 
 table_next(Name, RestOid) ->
     snmp_generic:table_next(db(Name), RestOid).
@@ -1011,11 +1058,43 @@ stc(vacmSecurityToGroupTable) -> ?vacmSecurityToGroupStorageType;
 stc(vacmViewTreeFamilyTable) -> ?vacmViewTreeFamilyStorageType.
  
 next(Name, RowIndex, Cols) ->
-    snmp_generic:handle_table_next(db(Name), RowIndex, Cols,
-                                   fa(Name), foi(Name), noc(Name)).
+    Ans = snmp_generic:handle_table_next(db(Name), RowIndex, Cols,
+                                   fa(Name), foi(Name), noc(Name)),
+    patch_next(Ans).
  
 get(Name, RowIndex, Cols) ->
-    snmp_generic:handle_table_get(db(Name), RowIndex, Cols, foi(Name)).
+    Ans = snmp_generic:handle_table_get(db(Name), RowIndex, Cols, foi(Name)),
+    patch(Cols, Ans).
+
+
+patch(Cols, Ans) when is_list(Ans) ->
+    % function to patch returned values
+    Func = fun
+        ({Col, {value, Val}}) ->    {value, do_patch(Col, Val)};
+        ({_, Other}) ->             Other
+    end,
+    % merge column numbers and return values. there must be as much
+    % return values as there are columns requested
+    Tmp = lists:zip(Cols, Ans),
+    % and patch all values
+    lists:map(Func, Tmp);
+patch(_, Ans) ->
+    Ans.
+
+patch_next(Ans) when is_list(Ans) ->
+    Func = fun
+        ({[C | _] = Idx, Val}) ->   {Idx, do_patch(C, Val)};
+        (Other) ->                  Other
+    end,
+    lists:map(Func, Ans);
+patch_next(Ans) ->
+    Ans.
+
+do_patch(?vacmViewTreeFamilyMask, Val) ->
+    oid2mask(Val);
+do_patch(_, Val) ->
+    Val.
+
 
 wrongValue(V) -> throw({wrongValue, V}).
 
