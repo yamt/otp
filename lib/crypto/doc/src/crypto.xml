@@ -44,6 +44,9 @@
         <p>sha: Secure Hash Standard (FIPS 180-2)</p>
       </item>
       <item>
+        <p>ripemd160: RACE Integrity Primitives Evaluation Message Digest Algorithm (ISO/IEC 10118-3)</p>
+      </item>
+      <item>
         <p>hmac: Keyed-Hashing for Message Authentication (RFC 2104)</p>
       </item>
       <item>
@@ -253,6 +256,52 @@ Mpint() = <![CDATA[<<ByteLen:32/integer-big, Bytes:ByteLen/binary>>]]>
       <desc>
         <p>Finishes the update of an SHA <c>Context</c> and returns
           the computed <c>SHA</c> message digest.</p>
+      </desc>
+    </func>
+    <func>
+      <name>ripemd160(Data) -> Digest</name>
+      <fsummary>Compute a <c>RIPEMD-160</c> message digest from <c>Data</c></fsummary>
+      <type>
+        <v>Data = iolist() | binary()</v>
+        <v>Digest = binary()</v>
+      </type>
+      <desc>
+        <p>Computes a <c>RIPEMD-160</c> message digest from <c>Data</c>, where
+          the length of the digest is 160 bits (20 bytes).</p>
+      </desc>
+    </func>
+    <func>
+      <name>ripemd160_init() -> Context</name>
+      <fsummary>Create a <c>RIPEMD-160</c> context</fsummary>
+      <type>
+        <v>Context = binary()</v>
+      </type>
+      <desc>
+        <p>Creates a <c>RIPEMD-160</c> <c>Context</c>, to be used in subsequent calls to
+          <c>ripemd160_update/2</c>.</p>
+      </desc>
+    </func>
+    <func>
+      <name>ripemd160_update(Context, Data) -> NewContext</name>
+      <fsummary>Update an <c>RIPEMD-160</c> context</fsummary>
+      <type>
+        <v>Data = iolist() | binary()</v>
+        <v>Context = NewContext = binary()</v>
+      </type>
+      <desc>
+        <p>Updates an <c>RIPEMD-160</c> <c>Context</c> with <c>Data</c>, and returns
+          a <c>NewContext</c>.</p>
+      </desc>
+    </func>
+    <func>
+      <name>ripemd160_final(Context) -> Digest</name>
+      <fsummary>Finish the update of a <c>RIPEMD-160</c> context</fsummary>
+      <type>
+        <v>Context = Digest = binary()</v>
+      </type>
+      <desc>
+        <p>Finishes the update of a <c>RIPEMD-160</c> <c>Context</c> and returns
+          the computed <c>RIPEMD-160</c> message digest.</p>
       </desc>
     </func>
     <func>

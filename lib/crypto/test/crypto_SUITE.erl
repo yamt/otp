@@ -40,6 +40,8 @@
 	 sha256_update/1,
 	 sha512/1,
 	 sha512_update/1,
+	 ripemd160/1,
+	 ripemd160_update/1,
 	 md5_mac/1,
 	 md5_mac_io/1,
 	 des_cbc/1,
@@ -82,6 +84,7 @@ groups() ->
      {rest, [],
       [md5, md5_update, md4, md4_update, md5_mac,
        md5_mac_io, sha, sha_update,
+       ripemd160, ripemd160_update,
        hmac_update_sha, hmac_update_sha_n, hmac_update_md5_n,
        hmac_update_md5_io, hmac_update_md5,
        des_cbc, aes_cfb, aes_cbc,
@@ -469,6 +472,31 @@ sha512_update(Config) when is_list(Config) ->
 	    hexstr2bin("8E959B75DAE313DA8CF4F72814FC143F8F7779C6EB9F7FA1"
 		       "7299AEADB6889018501D289E4900F7E4331B99DEC4B5433A"
 		       "C7D329EEB6DD26545E96E55B874BE909")).
+
+%%
+%%
+ripemd160(doc) ->
+    ["Generate RIPEMD160 message digest and check the result."];
+ripemd160(suite) ->
+    [];
+ripemd160(Config) when is_list(Config) ->
+    ?line m(crypto:ripemd160("abc"), hexstr2bin("8EB208F7E05D987A9B044A8E98C6B087F15A0BFC")),
+    ?line m(crypto:ripemd160("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn"
+            "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"),
+        hexstr2bin("6F3FA39B6B503C384F919A49A7AA5C2C08BDFB45")).
+%%
+%%
+ripemd160_update(doc) ->
+    ["Generate RIPEMD160 message digests by using ripemd160_init, ripemd160_update and"
+     "ripemd160_final, and check the result."];
+ripemd160_update(suite) ->
+    [];
+ripemd160_update(Config) when is_list(Config) ->
+    ?line Ctx = crypto:ripemd160_init(),
+    ?line Ctx1 = crypto:ripemd160_update(Ctx, "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmn"),
+    ?line Ctx2 = crypto:ripemd160_update(Ctx1, "hijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu"),
+    ?line m(crypto:ripemd160_final(Ctx2),
+        hexstr2bin("6F3FA39B6B503C384F919A49A7AA5C2C08BDFB45")).
 
 %%
 %%
