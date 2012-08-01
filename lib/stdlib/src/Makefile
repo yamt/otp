@@ -124,7 +124,8 @@ HRL_FILES= \
 	../include/erl_bits.hrl \
 	../include/ms_transform.hrl \
 	../include/qlc.hrl \
-	../include/zip.hrl
+	../include/zip.hrl \
+	../include/assert.hrl
 
 INTERNAL_HRL_FILES= dets.hrl
 
